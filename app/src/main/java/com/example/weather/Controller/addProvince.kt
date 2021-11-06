@@ -1,37 +1,45 @@
 package com.example.weather.Controller
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.ListView
 import com.example.weather.R
 import com.example.weather.model.DownLoadHandler
+import com.example.weather.model.DownLoadHandler.FinishCallBack
 import com.example.weather.model.Location
 import com.example.weather.Controller.SYXAdapter.Type.*
 
 class addProvince : BaseViewController() {
-    lateinit var allCity: ListView
-    lateinit var adapter: SYXAdapter
-    var dataSource: ArrayList<Location> = ArrayList()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_province)
-        allCity = findViewById(R.id.all_province_list)
-        adapter = SYXAdapter(this, R.layout.list_item, dataSource, UNSELECTABLE)
-        allCity.adapter = adapter
+        this.setupUI()
+    }
 
-        val downLoadHandler = DownLoadHandler.share
-
-        downLoadHandler.getAllCity(object : DownLoadHandler.CallBack {
+    override fun onStart() {
+        super.onStart()
+        downLoadHandler.getLocation(object : DownLoadHandler.CityCallBack {
             override fun getResult(result: ArrayList<Location>) {
+                dataSource += result
                 runOnUiThread {
-                    dataSource += result
-                    Log.d("data", dataSource.count().toString())
-                    adapter.notifyDataSetChanged()
-                    allCity.invalidate()
+                    reloadList()
+                    for (i in 0 until dataSource.count()) {
+                        downLoadHandler.getWeather(dataSource[i], object : FinishCallBack {
+                            override fun onFinish(forecast: Boolean, current: Boolean) {
+                                if (forecast && current) {
+                                    reloadCell(i)
+                                }
+                            }
+                        })
+                    }
                 }
             }
         })
+    }
+
+    override fun setupUI() {
+        setContentView(R.layout.activity_add_province)
+        downLoadHandler = DownLoadHandler.share
+        dataSource = ArrayList()
+        listView = findViewById(R.id.all_province_list)
+        adapter = SYXAdapter(this, R.layout.list_item, dataSource, UNSELECTABLE)
+        listView.adapter = adapter
     }
 }
