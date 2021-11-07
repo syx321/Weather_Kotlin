@@ -5,6 +5,7 @@ import com.example.weather.model.DownLoadHandler
 import com.example.weather.model.DownLoadHandler.RequestType
 import okhttp3.Request
 import okhttp3.OkHttpClient
+import java.lang.Exception
 import kotlin.concurrent.thread
 
 class DownLoadManager {
@@ -36,6 +37,10 @@ class DownLoadManager {
         }
     }
 
+    fun getCurrentCity(city: String, callBack: CallBack) {
+
+    }
+
     fun getWeather(cityCode: String, type: String, callBack: CallBack) {
         thread {
             val request = Request.Builder()
@@ -46,10 +51,14 @@ class DownLoadManager {
                             "&key=" + KEY_API
                 )
                 .build()
-            val response = client.newCall(request).execute()
-            val responseData = response.body?.string()
-            if (responseData != null) {
-                callBack.getResult(responseData)
+            try {
+                val response = client.newCall(request).execute()
+                val responseData = response.body?.string()
+                if (responseData != null) {
+                    callBack.getResult(responseData)
+                }
+            } catch (e: Exception) {
+                Log.e("getWeatherERR",e.toString())
             }
         }
     }

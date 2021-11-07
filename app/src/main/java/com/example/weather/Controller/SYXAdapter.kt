@@ -2,6 +2,7 @@ package com.example.weather.Controller
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,6 +66,7 @@ class SYXAdapter(
                 view.isEnabled = true
                 view.setOnClickListener(View.OnClickListener {
                     myLitener.onItemClicked(position)
+                    Log.d("click",position.toString())
                 })
             }
             Type.UNSELECTABLE -> view.isEnabled = false

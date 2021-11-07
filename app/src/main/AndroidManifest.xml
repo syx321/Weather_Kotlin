@@ -12,13 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Weather">
         <activity
-            android:name=".Controller.addProvince"
+            android:name=".Controller.AddCity"
             android:exported="false" />
         <activity
-            android:name=".Controller.addCity"
-            android:exported="false" />
-        <activity
-            android:name=".Controller.MainActivity"
+            android:name=".Controller.AddProvince"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

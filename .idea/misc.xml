@@ -4,7 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_add_city.xml" value="0.15833333333333333" />
-        <entry key="app/src/main/res/layout/activity_add_province.xml" value="0.14427083333333332" />
+        <entry key="app/src/main/res/layout/activity_add_province.xml" value="0.26645651489615024" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.22367781240866721" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3192077007950261" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.2904916267950987" />
       </map>
